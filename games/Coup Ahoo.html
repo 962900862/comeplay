@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Coup Ahoo - 一款充满策略与智慧的在线游戏。体验简单易上手的操作方式和丰富的策略玩法。">
+    <meta name="keywords" content="Coup Ahoo,在线游戏,策略游戏,休闲游戏">
+    <title>Coup Ahoo - 策略性在线游戏 | 免费体验</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold mb-4 text-center sm:text-left">Coup Ahoo 策略游戏</h1>
+            <p class="text-xl text-gray-600 dark:text-gray-400 text-center sm:text-left">一款充满策略与智慧的在线游戏体验</p>
+        </header>
+
+        <section class="mb-12 relative">
+            <div id="game-container" class="aspect-[16/9] w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                <iframe
+                    id="game-frame"
+                    src="https://cloud.onlinegames.io/games/2025/unity/monster-survivors/index-og.html"
+                    class="w-full h-full border-0"
+                    title="Coup Ahoo 游戏界面"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                ></iframe>
+            </div>
+            <div class="absolute top-4 right-4 flex gap-2">
+                <button
+                    id="fullscreen-btn"
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transition-colors duration-200 flex items-center gap-2"
+                    title="全屏模式">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm14 0a1 1 0 00-1-1h-4a1 1 0 100 2h1.586l-2.293 2.293a1 1 0 001.414 1.414L15 6.414V8a1 1 0 102 0V4zM3 16a1 1 0 001 1h4a1 1 0 100-2H6.414l2.293-2.293a1 1 0 00-1.414-1.414L5 13.586V12a1 1 0 10-2 0v4zm14 0a1 1 0 01-1 1h-4a1 1 0 110-2h1.586l-2.293-2.293a1 1 0 011.414-1.414L15 13.586V12a1 1 0 112 0v4z" clip-rule="evenodd" />
+                    </svg>
+                    全屏
+                </button>
+                <button
+                    id="screenshot-btn"
+                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow-md transition-colors duration-200 flex items-center gap-2"
+                    title="截图">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                    </svg>
+                    截图
+                </button>
+            </div>
+        </section>
+
+        <section class="space-y-8">
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                <h2 class="text-2xl font-semibold mb-4">游戏介绍</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    Coup Ahoo 是一款引人入胜的策略游戏，玩家需要运用智慧和战术来获得胜利。游戏采用现代化的设计理念，为玩家带来流畅的游戏体验。无需下载安装，打开网页即可开始您的游戏之旅。
+                </p>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                <h2 class="text-2xl font-semibold mb-4">游戏特点</h2>
+                <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
+                    <li>简单易上手的操作方式，适合各年龄段玩家</li>
+                    <li>丰富的策略玩法，考验玩家的战术思维</li>
+                    <li>精美的游戏画面，带来视觉盛宴</li>
+                    <li>流畅的游戏体验，即开即玩无需等待</li>
+                    <li>支持多平台访问，随时随地享受游戏乐趣</li>
+                </ul>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                <h2 class="text-2xl font-semibold mb-4">游戏说明</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    游戏采用最新的Web技术开发，完美支持PC端和移动端访问。响应式设计确保您在任何设备上都能获得最佳游戏体验。游戏画面精美，操作响应迅速，是休闲娱乐的绝佳选择。
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('game-container');
+            const fullscreenBtn = document.getElementById('fullscreen-btn');
+            const screenshotBtn = document.getElementById('screenshot-btn');
+
+            // 全屏功能
+            fullscreenBtn.addEventListener('click', function() {
+                if (!document.fullscreenElement) {
+                    container.requestFullscreen().catch(err => {
+                        alert('全屏模式启动失败：' + err.message);
+                    });
+                } else {
+                    document.exitFullscreen();
+                }
+            });
+
+            // 截图功能
+            screenshotBtn.addEventListener('click', async function() {
+                try {
+                    const canvas = await html2canvas(container);
+                    const link = document.createElement('a');
+                    link.download = 'game-screenshot.png';
+                    link.href = canvas.toDataURL();
+                    link.click();
+                } catch (err) {
+                    alert('截图失败：' + err.message);
+                }
+            });
+
+            // 监听全屏变化
+            document.addEventListener('fullscreenchange', function() {
+                fullscreenBtn.innerHTML = document.fullscreenElement ?
+                    '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 4a1 1 0 00-1 1v4a1 1 0 01-2 0V5a3 3 0 013-3h4a1 1 0 010 2H5zm10 0a1 1 0 011 1v4a1 1 0 102 0V5a3 3 0 00-3-3h-4a1 1 0 100 2h4zM5 16a1 1 0 001 1h4a1 1 0 100-2H6a1 1 0 01-1-1v-4a1 1 0 10-2 0v4a3 3 0 003 3zm10 0a1 1 0 00-1-1h-4a1 1 0 100 2h4a3 3 0 003-3v-4a1 1 0 10-2 0v4a1 1 0 01-1 1z" clip-rule="evenodd" /></svg>退出全屏' :
+                    '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm14 0a1 1 0 00-1-1h-4a1 1 0 100 2h1.586l-2.293 2.293a1 1 0 001.414 1.414L15 6.414V8a1 1 0 102 0V4zM3 16a1 1 0 001 1h4a1 1 0 100-2H6.414l2.293-2.293a1 1 0 00-1.414-1.414L5 13.586V12a1 1 0 10-2 0v4zm14 0a1 1 0 01-1 1h-4a1 1 0 110-2h1.586l-2.293-2.293a1 1 0 011.414-1.414L15 13.586V12a1 1 0 112 0v4z" clip-rule="evenodd" /></svg>全屏';
+            });
+        });
+    </script>
+</body>
+</html>

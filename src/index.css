@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#0F0F15] text-white;
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+}
+
+.swiper {
+  @apply overflow-hidden;
+}
+
+.swiper-slide {
+  @apply bg-[#0F0F15];
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  @apply text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 !important;
+}
+
+.swiper-pagination-bullet {
+  @apply bg-white/50 !important;
+}
+
+.swiper-pagination-bullet-active {
+  @apply bg-white !important;
+}
+
+.swiper-pagination {
+  @apply opacity-0 group-hover:opacity-100 transition-opacity duration-300 !important;
+}
