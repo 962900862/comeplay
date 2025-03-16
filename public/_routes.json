@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": [
+    "/assets/*",
+    "/games/*",
+    "/_headers",
+    "/_redirects",
+    "/favicon.ico"
+  ]
+} 

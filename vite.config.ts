@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/',
   plugins: [react()],
   optimizeDeps: {
     include: [
@@ -32,10 +31,7 @@ export default defineConfig({
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'swiper-vendor': ['swiper', 'swiper/react', 'swiper/modules'],
           'ui-vendor': ['lucide-react']
-        },
-        entryFileNames: 'assets/[name]-[hash].js',
-        chunkFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]'
+        }
       }
     }
   }
