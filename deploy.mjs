@@ -66,8 +66,36 @@ try {
   // 7. 切换到 gh-pages 分支
   console.log(`${colors.yellow}7. 推送到 gh-pages 分支${colors.reset}`);
   const remoteUrl = execSync('git config --get remote.origin.url', { cwd: process.cwd() }).toString().trim();
-  execSync(`git push -f ${remoteUrl} HEAD:gh-pages`);
-  console.log(`   已推送到 gh-pages 分支`);
+  
+  // 设置 Git 配置以提高连接稳定性
+  execSync('git config --global http.postBuffer 524288000');  // 增加缓冲区大小
+  execSync('git config --global http.lowSpeedLimit 1000');    // 低速限制
+  execSync('git config --global http.lowSpeedTime 60');       // 低速时间
+  
+  // 尝试推送，带有重试机制
+  let pushSuccess = false;
+  let attempts = 0;
+  const maxAttempts = 3;
+  
+  while (!pushSuccess && attempts < maxAttempts) {
+    attempts++;
+    try {
+      console.log(`   尝试推送到 gh-pages 分支 (尝试 ${attempts}/${maxAttempts})...`);
+      execSync(`git push -f ${remoteUrl} HEAD:gh-pages`, { timeout: 120000 });  // 设置超时时间为120秒
+      pushSuccess = true;
+      console.log(`   推送成功!`);
+    } catch (err) {
+      console.log(`${colors.red}   推送失败: ${err.message}${colors.reset}`);
+      if (attempts < maxAttempts) {
+        console.log(`   等待 10 秒后重试...`);
+        execSync('sleep 10 || ping -n 10 127.0.0.1 > nul');  // 适用于 Windows 和 Unix
+      }
+    }
+  }
+  
+  if (!pushSuccess) {
+    throw new Error('推送到 GitHub 失败，请检查网络连接或尝试使用代理');
+  }
 
   // 8. 清理
   console.log(`${colors.yellow}8. 清理临时目录${colors.reset}`);

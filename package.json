@@ -1,7 +1,6 @@
 {
   "name": "vite-react-typescript-starter",
   "homepage": "https://962900862.github.io/comeplay/",
-  
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,24 +11,36 @@
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "manual-deploy": "node deploy.mjs"
+    "manual-deploy": "node deploy.mjs",
+    "github-actions-deploy": "git push origin main && echo \"已触发GitHub Actions部署流程，请等待几分钟后访问 https://962900862.github.io/comeplay/\"",
+    "netlify-deploy": "node netlify-deploy.mjs",
+    "local-deploy": "node local-deploy.mjs",
+    "sync-translations": "node src/scripts/syncTranslations.cjs",
+    "create-lang": "node src/scripts/createLanguage.cjs"
   },
   "dependencies": {
     "@types/react-helmet": "^6.1.11",
+    "i18next": "^24.2.3",
+    "i18next-browser-languagedetector": "^8.0.4",
+    "i18next-http-backend": "^3.0.2",
     "lucide-react": "^0.344.0",
     "next": "^13.5.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
+    "react-i18next": "^15.4.1",
     "react-router-dom": "^6.22.3",
-    "swiper": "^11.0.6"
+    "swiper": "^11.0.6",
+    "vue-i18n": "^11.1.2"
   },
   "devDependencies": {
     "@eslint/js": "^8.56.0",
+    "@tailwindcss/typography": "^0.5.16",
     "@types/react": "^18.2.64",
     "@types/react-dom": "^18.2.21",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.18",
+    "di18n-cli": "^0.1.29",
     "eslint": "^8.56.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",

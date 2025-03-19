@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      message:
+        description: '部署信息'
+        required: false
+        default: '手动触发部署'
 
 permissions:
   contents: write

@@ -55,6 +55,7 @@ export default function Footer() {
               ))}
             </div>
           </div>
+
         </div>
         
         <div className="mt-8 pt-8 border-t border-[#7D3CFF]/10">
