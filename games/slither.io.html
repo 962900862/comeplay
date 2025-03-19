@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Slither.io - A popular multiplayer online game where you control a snake to collect orbs and become the longest serpent on the server.">
+    <meta name="keywords" content="Slither.io,snake game,multiplayer,io game,online game">
+    <title>Slither.io - Multiplayer Snake Game | Free Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            bg: '#0F0F15',
+                            surface: '#1F1F2C',
+                            text: '#E2E8F0'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        // Theme management
+        const themeConfig = {
+            dark: {
+                background: '#0F0F15',
+                surface: '#1F1F2C',
+                text: '#E2E8F0'
+            },
+            light: {
+                background: '#FFFFFF',
+                surface: '#F3F4F6',
+                text: '#1F2937'
+            }
+        };
+
+        function applyTheme(isDark) {
+            const theme = isDark ? themeConfig.dark : themeConfig.light;
+            
+            // Apply theme to root element
+            document.documentElement.style.setProperty('--bg-color', theme.background);
+            document.documentElement.style.setProperty('--surface-color', theme.surface);
+            document.documentElement.style.setProperty('--text-color', theme.text);
+            
+            // Apply theme class
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            
+            // Store theme preference
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            
+            // Apply theme to iframe if possible
+            try {
+                const gameFrame = document.getElementById('game-frame');
+                if (gameFrame && gameFrame.contentWindow) {
+                    gameFrame.contentWindow.postMessage({ 
+                        type: 'THEME_CHANGE', 
+                        theme: isDark ? 'dark' : 'light' 
+                    }, '*');
+                }
+            } catch (e) {
+                console.warn('Failed to apply theme to game iframe:', e);
+            }
+        }
+
+        // Initialize theme
+        function initTheme() {
+            const isDarkMode = localStorage.getItem('theme') === 'dark' || 
+                (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            applyTheme(isDarkMode);
+        }
+        
+        // Initialize theme on page load
+        initTheme();
+        
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+                applyTheme(e.matches);
+            }
+        });
+        
+        // Listen for storage changes to keep theme in sync across tabs
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'theme') {
+                initTheme();
+            }
+        });
+    </script>
+    <style>
+        :root {
+            --bg-color: #FFFFFF;
+            --surface-color: #F3F4F6;
+            --text-color: #1F2937;
+        }
+
+        .dark {
+            --bg-color: #0F0F15;
+            --surface-color: #1F1F2C;
+            --text-color: #E2E8F0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Theme toggle button styles */
+        #theme-toggle .dark-icon {
+            display: none;
+        }
+        
+        #theme-toggle .light-icon {
+            display: block;
+        }
+        
+        .dark #theme-toggle .dark-icon {
+            display: block;
+        }
+        
+        .dark #theme-toggle .light-icon {
+            display: none;
+        }
+
+        /* Game container theme styles */
+        #game-container {
+            background-color: var(--surface-color);
+            transition: background-color 0.3s ease;
+        }
+
+        .dark #game-container {
+            background-color: var(--surface-color);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 w-full bg-white/90 dark:bg-[#0F0F15]/90 backdrop-blur-lg z-50 border-b border-[#00F3FF]/10 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="/" class="flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7D3CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11"></line><line x1="8" x2="8" y1="9" y2="13"></line><line x1="15" x2="15.01" y1="12" y2="12"></line><line x1="18" x2="18.01" y1="10" y2="10"></line><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.544-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.152A4 4 0 0 0 17.32 5z"></path></svg>
+                    <div class="text-transparent bg-clip-text bg-gradient-to-r from-[#7D3CFF] to-[#00F3FF] text-2xl font-bold">
+                        GameVerse
+                    </div>
+                </a>
+                
+                <div class="flex items-center space-x-4">
+                    <button id="theme-toggle" class="text-gray-700 dark:text-gray-300 hover:text-[#00F3FF] transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark-icon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="light-icon"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8 pt-20 max-w-4xl">
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold mb-4 text-center sm:text-left">Slither.io</h1>
+            <p class="text-xl text-gray-600 dark:text-gray-400 text-center sm:text-left">A popular multiplayer online game where you compete to become the longest snake</p>
+        </header>
+
+        <section class="mb-12 relative">
+            <div class="mb-4 flex justify-end gap-2">
+                <button
+                    id="fullscreen-btn"
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transition-colors duration-200 flex items-center gap-2"
+                    title="Fullscreen Mode">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm14 0a1 1 0 00-1-1h-4a1 1 0 100 2h1.586l-2.293 2.293a1 1 0 001.414 1.414L15 6.414V8a1 1 0 102 0V4zM3 16a1 1 0 001 1h4a1 1 0 100-2H6.414l2.293-2.293a1 1 0 00-1.414-1.414L5 13.586V12a1 1 0 10-2 0v4zm14 0a1 1 0 01-1 1h-4a1 1 0 110-2h1.586l-2.293-2.293a1 1 0 011.414-1.414L15 13.586V12a1 1 0 112 0v4z" clip-rule="evenodd" />
+                    </svg>
+                    Fullscreen
+                </button>
+                <button
+                    id="screenshot-btn"
+                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow-md transition-colors duration-200 flex items-center gap-2"
+                    title="Screenshot">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                    </svg>
+                    Screenshot
+                </button>
+            </div>
+            <div id="game-container" class="aspect-[16/9] w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden relative">
+                <div id="loading-overlay" class="absolute inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
+                    <div class="text-white text-center">
+                        <div class="animate-spin rounded-full h-12 w-12 border-4 border-white border-t-transparent mb-4 mx-auto"></div>
+                        <p>Loading game...</p>
+                    </div>
+                </div>
+                <div id="error-overlay" class="absolute inset-0 bg-gray-800 bg-opacity-75 hidden flex items-center justify-center">
+                    <div class="text-white text-center p-4">
+                        <svg class="w-12 h-12 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                        <p class="text-xl font-semibold mb-2">Game loading failed</p>
+                        <p class="text-gray-300">Please check your network connection or try again later</p>
+                        <button onclick="retryLoading()" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">Retry</button>
+                    </div>
+                </div>
+                <iframe
+                    id="game-frame"
+                    src="http://slither.com/io"
+                    class="w-full h-full border-0"
+                    title="Slither.io Game Interface"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                ></iframe>
+            </div>
+        </section>
+
+        <section class="space-y-8">
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                <h2 class="text-2xl font-semibold mb-4">Game Overview</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    Slither.io is a popular multiplayer online .io game where players control a snake to collect glowing orbs for growth while competing to become the longest serpent. The game combines simple mechanics with intense competition: avoid collisions with other snakes' heads, strategically trap opponents, and devour their remains to boost your length. Its minimalist 2D top-down view and vibrant colors create a casual yet addictive experience, appealing to both quick-play enthusiasts and competitive gamers.
+                </p>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                <h2 class="text-2xl font-semibold mb-4">Game Strategies</h2>
+                <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
+                    <li><span class="font-semibold">Basic Movement & Growth:</span> Use mouse movements to steer your snake. Collect orbs to grow longer, but avoid touching other snakes' heads. Prioritize eating small glowing dots early to build initial length safely.</li>
+                    <li><span class="font-semibold">Strategic Maneuvering:</span> Press and hold the left mouse button to speed up, allowing you to cut off opponents or escape threats. Create tight loops to trap larger snakes, forcing them to collide with your body.</li>
+                    <li><span class="font-semibold">Advanced Survival Tactics:</span> Lure aggressive players into crowded areas to let others eliminate them. Stay near the map edges to reduce angles of attack but watch for ambushes.</li>
+                </ul>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                <h2 class="text-2xl font-semibold mb-4">Core Mechanics (No Traditional Items)</h2>
+                <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
+                    <li><span class="font-semibold">Speed Boost:</span> Temporary acceleration at the cost of losing mass. Use sparingly for chasing or escaping.</li>
+                    <li><span class="font-semibold">Snake Remnants:</span> Devour colorful trails left by defeated players to grow rapidly.</li>
+                </ul>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                <h2 class="text-2xl font-semibold mb-4">Controls</h2>
+                <div class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <ul class="list-disc list-inside space-y-2 mb-4">
+                        <li><span class="font-semibold">Mouse:</span> Move to steer your snake's direction.</li>
+                        <li><span class="font-semibold">Left Click:</span> Hold to activate speed boost.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                <h2 class="text-2xl font-semibold mb-4">Tags</h2>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 rounded-full">Multiplayer</span>
+                    <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-100 rounded-full">Survival</span>
+                    <span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-100 rounded-full">.IO Game</span>
+                    <span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-100 rounded-full">2D Top-Down</span>
+                    <span class="px-3 py-1 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-100 rounded-full">Competitive</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('game-container');
+            const fullscreenBtn = document.getElementById('fullscreen-btn');
+            const screenshotBtn = document.getElementById('screenshot-btn');
+            const gameFrame = document.getElementById('game-frame');
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const errorOverlay = document.getElementById('error-overlay');
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            
+            // Theme toggle functionality
+            themeToggleBtn.addEventListener('click', function() {
+                const isDark = document.documentElement.classList.contains('dark');
+                applyTheme(!isDark);
+            });
+            
+            let loadAttempts = 0;
+            const maxLoadAttempts = 3;
+            let gameLoaded = false;
+            
+            // Preload game
+            function loadGame() {
+                loadingOverlay.style.display = 'flex';
+                errorOverlay.style.display = 'none';
+                
+                // Add random parameter to prevent caching issues
+                const timestamp = new Date().getTime();
+                gameFrame.src = `http://slither.com/io?t=${timestamp}`;
+            }
+            
+            // Listen for iframe load status
+            gameFrame.addEventListener('load', function() {
+                // Check if iframe content loaded successfully
+                try {
+                    // Try to access iframe content, if successful then loading is normal
+                    const iframeContent = gameFrame.contentWindow || gameFrame.contentDocument;
+                    if (iframeContent) {
+                        // Set a short delay to ensure content is fully rendered
+                        setTimeout(() => {
+                            loadingOverlay.style.display = 'none';
+                            gameLoaded = true;
+                            loadAttempts = 0;
+                        }, 1000);
+                    } else {
+                        handleLoadError();
+                    }
+                } catch (e) {
+                    handleLoadError();
+                }
+            });
+            
+            // Listen for iframe load errors
+            gameFrame.addEventListener('error', handleLoadError);
+            
+            function handleLoadError() {
+                loadAttempts++;
+                if (loadAttempts < maxLoadAttempts) {
+                    console.log(`Game loading failed, attempting retry ${loadAttempts}...`);
+                    // Auto retry
+                    setTimeout(loadGame, 1500);
+                } else {
+                    loadingOverlay.style.display = 'none';
+                    errorOverlay.style.display = 'flex';
+                    console.error('Game loading failed, maximum retry attempts reached');
+                }
+            }
+            
+            // Check if iframe is black screen
+            function checkBlackScreen() {
+                if (!gameLoaded) {
+                    try {
+                        const iframeDoc = gameFrame.contentDocument || gameFrame.contentWindow.document;
+                        // If iframe content is empty or has very little content, it might be a black screen
+                        if (!iframeDoc || !iframeDoc.body || iframeDoc.body.innerHTML.trim().length < 50) {
+                            handleLoadError();
+                        }
+                    } catch (e) {
+                        // Cross-domain issues may prevent content access
+                        console.log('Unable to check iframe content, possible cross-domain restriction');
+                    }
+                }
+            }
+            
+            // Initial game load
+            loadGame();
+            
+            // Check for black screen after 5 seconds
+            setTimeout(checkBlackScreen, 5000);
+            
+            // Retry loading function
+            window.retryLoading = function() {
+                loadAttempts = 0;
+                gameLoaded = false;
+                loadGame();
+            };
+
+            // Fullscreen functionality
+            fullscreenBtn.addEventListener('click', function() {
+                if (!document.fullscreenElement) {
+                    container.requestFullscreen().catch(err => {
+                        alert('Fullscreen mode failed to launch: ' + err.message);
+                    });
+                } else {
+                    document.exitFullscreen();
+                }
+            });
+
+            // Screenshot functionality
+            screenshotBtn.addEventListener('click', async function() {
+                try {
+                    const canvas = await html2canvas(container);
+                    const link = document.createElement('a');
+                    link.download = 'slither-io-screenshot.png';
+                    link.href = canvas.toDataURL();
+                    link.click();
+                } catch (err) {
+                    alert('Screenshot failed: ' + err.message);
+                }
+            });
+
+            // Listen for fullscreen changes
+            document.addEventListener('fullscreenchange', function() {
+                fullscreenBtn.innerHTML = document.fullscreenElement ?
+                    '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 4a1 1 0 00-1 1v4a1 1 0 01-2 0V5a3 3 0 013-3h4a1 1 0 010 2H5zm10 0a1 1 0 011 1v4a1 1 0 102 0V5a3 3 0 00-3-3h-4a1 1 0 100 2h4zM5 16a1 1 0 001 1h4a1 1 0 100-2H6a1 1 0 01-1-1v-4a1 1 0 10-2 0v4a3 3 0 003 3zm10 0a1 1 0 00-1-1h-4a1 1 0 100 2h4a3 3 0 003-3v-4a1 1 0 10-2 0v4a1 1 0 01-1 1z" clip-rule="evenodd" /></svg>Exit Fullscreen' :
+                    '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm14 0a1 1 0 00-1-1h-4a1 1 0 100 2h1.586l-2.293 2.293a1 1 0 001.414 1.414L15 6.414V8a1 1 0 102 0V4zM3 16a1 1 0 001 1h4a1 1 0 100-2H6.414l2.293-2.293a1 1 0 00-1.414-1.414L5 13.586V12a1 1 0 10-2 0v4zm14 0a1 1 0 01-1 1h-4a1 1 0 110-2h1.586l-2.293-2.293a1 1 0 011.414-1.414L15 13.586V12a1 1 0 112 0v4z" clip-rule="evenodd" /></svg>Fullscreen';
+            });
+        });
+    </script>
+</body>
+</html>
