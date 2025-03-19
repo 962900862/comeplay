@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="alternate icon" type="image/x-icon" href="./favicon.ico" />
+    <link rel="apple-touch-icon" href="./favicon.svg" />
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="theme-color" content="#7D3CFF" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GameVerse</title>
+    <!-- Edge 浏览器兼容性脚本 -->
+    <script>
+      // 检测是否为 Edge 浏览器
+      var isEdge = navigator.userAgent.indexOf('Edg/') > -1 || 
+                  navigator.userAgent.indexOf('Edge/') > -1;
+      if (isEdge) {
+        console.log('检测到 Edge 浏览器，加载兼容性脚本');
+        var script = document.createElement('script');
+        script.src = '/comeplay/edge-compatibility.js';
+        document.head.appendChild(script);
+      }
+    </script>
+    <!-- GitHub Pages SPA 重定向处理 -->
+    <script type="text/javascript">
+      // 处理 GitHub Pages 中的路由重定向
+      // 来源: https://github.com/rafgraph/spa-github-pages
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
+    <script type="module" crossorigin src="/comeplay/assets/index-CEsgVZdD.js"></script>
+    <link rel="modulepreload" crossorigin href="/comeplay/assets/react-vendor-Bbk3ldTb.js">
+    <link rel="modulepreload" crossorigin href="/comeplay/assets/ui-vendor-CDUkvV9Z.js">
+    <link rel="stylesheet" crossorigin href="/comeplay/assets/index-C5khZZqs.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

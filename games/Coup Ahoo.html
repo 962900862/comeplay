@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Coup Ahoo - A strategic game filled with wisdom and tactics. Experience simple and intuitive gameplay with rich strategic elements.">
+    <meta name="keywords" content="Coup Ahoo,online game,strategy game,casual game">
+    <title>Coup Ahoo - Strategic Online Game | Free Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            bg: '#0F0F15',
+                            surface: '#1F1F2C',
+                            text: '#E2E8F0'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        // Theme management
+        const themeConfig = {
+            dark: {
+                background: '#0F0F15',
+                surface: '#1F1F2C',
+                text: '#E2E8F0'
+            },
+            light: {
+                background: '#FFFFFF',
+                surface: '#F3F4F6',
+                text: '#1F2937'
+            }
+        };
+
+        function applyTheme(isDark) {
+            const theme = isDark ? themeConfig.dark : themeConfig.light;
+            
+            // Apply theme to root element
+            document.documentElement.style.setProperty('--bg-color', theme.background);
+            document.documentElement.style.setProperty('--surface-color', theme.surface);
+            document.documentElement.style.setProperty('--text-color', theme.text);
+            
+            // Apply theme class
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            
+            // Store theme preference
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            
+            // Apply theme to iframe if possible
+            try {
+                const gameFrame = document.getElementById('game-frame');
+                if (gameFrame && gameFrame.contentWindow) {
+                    gameFrame.contentWindow.postMessage({ 
+                        type: 'THEME_CHANGE', 
+                        theme: isDark ? 'dark' : 'light' 
+                    }, '*');
+                }
+            } catch (e) {
+                console.warn('Failed to apply theme to game iframe:', e);
+            }
+        }
+
+        // Initialize theme
+        function initTheme() {
+            const isDarkMode = localStorage.getItem('theme') === 'dark' || 
+                (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            applyTheme(isDarkMode);
+        }
+        
+        // Initialize theme on page load
+        initTheme();
+        
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+                applyTheme(e.matches);
+            }
+        });
+        
+        // Listen for storage changes to keep theme in sync across tabs
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'theme') {
+                initTheme();
+            }
+        });
+    </script>
+    <style>
+        :root {
+            --bg-color: #FFFFFF;
+            --surface-color: #F3F4F6;
+            --text-color: #1F2937;
+        }
+
+        .dark {
+            --bg-color: #0F0F15;
+            --surface-color: #1F1F2C;
+            --text-color: #E2E8F0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Theme toggle button styles */
+        #theme-toggle .dark-icon {
+            display: none;
+        }
+        
+        #theme-toggle .light-icon {
+            display: block;
+        }
+        
+        .dark #theme-toggle .dark-icon {
+            display: block;
+        }
+        
+        .dark #theme-toggle .light-icon {
+            display: none;
+        }
+
+        /* Game container theme styles */
+        #game-container {
+            background-color: var(--surface-color);
+            transition: background-color 0.3s ease;
+        }
+
+        .dark #game-container {
+            background-color: var(--surface-color);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 w-full bg-white/90 dark:bg-[#0F0F15]/90 backdrop-blur-lg z-50 border-b border-[#00F3FF]/10 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="/" class="flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7D3CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11"></line><line x1="8" x2="8" y1="9" y2="13"></line><line x1="15" x2="15.01" y1="12" y2="12"></line><line x1="18" x2="18.01" y1="10" y2="10"></line><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.544-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.152A4 4 0 0 0 17.32 5z"></path></svg>
+                    <div class="text-transparent bg-clip-text bg-gradient-to-r from-[#7D3CFF] to-[#00F3FF] text-2xl font-bold">
+                        GameVerse
+                    </div>
+                </a>
+                
+                <div class="flex items-center space-x-4">
+                    <button id="theme-toggle" class="text-gray-700 dark:text-gray-300 hover:text-[#00F3FF] transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark-icon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="light-icon"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8 pt-20 max-w-4xl">
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold mb-4 text-center sm:text-left">Coup Ahoo Strategy Game</h1>
+            <p class="text-xl text-gray-600 dark:text-gray-400 text-center sm:text-left">A unique gaming experience filled with strategy and wisdom</p>
+        </header>
+
+        <section class="mb-12 relative">
+            <div class="mb-4 flex justify-end gap-2">
+                <button
+                    id="fullscreen-btn"
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transition-colors duration-200 flex items-center gap-2"
+                    title="Fullscreen Mode">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm14 0a1 1 0 00-1-1h-4a1 1 0 100 2h1.586l-2.293 2.293a1 1 0 001.414 1.414L15 6.414V8a1 1 0 102 0V4zM3 16a1 1 0 001 1h4a1 1 0 100-2H6.414l2.293-2.293a1 1 0 00-1.414-1.414L5 13.586V12a1 1 0 10-2 0v4zm14 0a1 1 0 01-1 1h-4a1 1 0 110-2h1.586l-2.293-2.293a1 1 0 011.414-1.414L15 13.586V12a1 1 0 112 0v4z" clip-rule="evenodd" />
+                    </svg>
+                    Fullscreen
+                </button>
+                <button
+                    id="screenshot-btn"
+                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow-md transition-colors duration-200 flex items-center gap-2"
+                    title="Screenshot">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                    </svg>
+                    Screenshot
+                </button>
+            </div>
+            <div id="game-container" class="aspect-[16/9] w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden relative">
+                <div id="loading-overlay" class="absolute inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
+                    <div class="text-white text-center">
+                        <div class="animate-spin rounded-full h-12 w-12 border-4 border-white border-t-transparent mb-4 mx-auto"></div>
+                        <p>Loading game...</p>
+                    </div>
+                </div>
+                <div id="error-overlay" class="absolute inset-0 bg-gray-800 bg-opacity-75 hidden flex items-center justify-center">
+                    <div class="text-white text-center p-4">
+                        <svg class="w-12 h-12 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                        <p class="text-xl font-semibold mb-2">Game loading failed</p>
+                        <p class="text-gray-300">Please check your network connection or try again later</p>
+                        <button onclick="retryLoading()" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">Retry</button>
+                    </div>
+                </div>
+                <iframe
+                    id="game-frame"
+                    src="https://games.sahaqiel.com/coup-ahoo.html"
+                    class="w-full h-full border-0"
+                    title="Coup Ahoo Game Interface"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                ></iframe>
+            </div>
+        </section>
+
+        <section class="space-y-8">
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                <h2 class="text-2xl font-semibold mb-4">Game Introduction</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    Coup Ahoo is a game where you've grown tired of your fleet's incompetence. Your mission is to take down all 13 members one by one and claim the top position. Along the way, you'll uncover precious cargo dice. These dice not only add an element of strategy but also bring a lot of fun and excitement to the game. It offers a unique gaming experience filled with challenges and surprises as you strive to overcome each fleet member.
+                </p>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                <h2 class="text-2xl font-semibold mb-4">Game Walkthrough</h2>
+                <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
+                    <li>Familiarize with Opponents：Get to know the characteristics and weaknesses of each fleet member thoroughly. This knowledge will help you plan your attacks and defenses more effectively during battles.</li>
+                    <li>Strategic Use of Dice：Make good use of the cargo dice according to the game situation. Different dice may have different effects, so choose the right ones at the right time to gain an advantage.</li>
+                    <li>Progressive Approach：Develop a step-by-step plan. Decide the order in which you'll face the fleet members and execute your strategies carefully to achieve victory.</li>
+                </ul>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                <h2 class="text-2xl font-semibold mb-4">Introduction to Some In-game Items</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    The cargo dice are the core items in the game. They come with various special effects. For example, some dice might give you extra power during a fight, some could provide special abilities like evading an opponent's attack, and others may help you gain an edge in different aspects of the game, all of which contribute to your success.
+                </p>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                <h2 class="text-2xl font-semibold mb-4">Gameplay Introduction</h2>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    There is currently no information available to introduce the gameplay in the format of ↑↓←→. It's likely that the game is played through specific commands or on-screen interactions to fight against fleet members and utilize the special effects of the cargo dice to reach the top.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('game-container');
+            const fullscreenBtn = document.getElementById('fullscreen-btn');
+            const screenshotBtn = document.getElementById('screenshot-btn');
+            const gameFrame = document.getElementById('game-frame');
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const errorOverlay = document.getElementById('error-overlay');
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            
+            // Theme toggle functionality
+            themeToggleBtn.addEventListener('click', function() {
+                const isDark = document.documentElement.classList.contains('dark');
+                applyTheme(!isDark);
+            });
+            
+            let loadAttempts = 0;
+            const maxLoadAttempts = 3;
+            let gameLoaded = false;
+            
+            // 预加载游戏
+            function loadGame() {
+                loadingOverlay.style.display = 'flex';
+                errorOverlay.style.display = 'none';
+                
+                // 添加随机参数防止缓存问题
+                const timestamp = new Date().getTime();
+                gameFrame.src = `https://games.sahaqiel.com/coup-ahoo.html?t=${timestamp}`;
+            }
+            
+            // 监听iframe加载状态
+            gameFrame.addEventListener('load', function() {
+                // 检查iframe内容是否加载成功
+                try {
+                    // 尝试访问iframe内容，如果成功则表示加载正常
+                    const iframeContent = gameFrame.contentWindow || gameFrame.contentDocument;
+                    if (iframeContent) {
+                        // 设置一个短暂延迟，确保内容完全渲染
+                        setTimeout(() => {
+                            loadingOverlay.style.display = 'none';
+                            gameLoaded = true;
+                            loadAttempts = 0;
+                        }, 1000);
+                    } else {
+                        handleLoadError();
+                    }
+                } catch (e) {
+                    handleLoadError();
+                }
+            });
+            
+            // 监听iframe加载错误
+            gameFrame.addEventListener('error', handleLoadError);
+            
+            function handleLoadError() {
+                loadAttempts++;
+                if (loadAttempts < maxLoadAttempts) {
+                    console.log(`游戏加载失败，正在尝试第${loadAttempts}次重新加载...`);
+                    // 自动重试
+                    setTimeout(loadGame, 1500);
+                } else {
+                    loadingOverlay.style.display = 'none';
+                    errorOverlay.style.display = 'flex';
+                    console.error('游戏加载失败，已达到最大重试次数');
+                }
+            }
+            
+            // 检查iframe是否为黑屏
+            function checkBlackScreen() {
+                if (!gameLoaded) {
+                    try {
+                        const iframeDoc = gameFrame.contentDocument || gameFrame.contentWindow.document;
+                        // 如果iframe内容为空或只有极少内容，可能是黑屏
+                        if (!iframeDoc || !iframeDoc.body || iframeDoc.body.innerHTML.trim().length < 50) {
+                            handleLoadError();
+                        }
+                    } catch (e) {
+                        // 跨域问题可能导致无法访问内容
+                        console.log('无法检查iframe内容，可能存在跨域限制');
+                    }
+                }
+            }
+            
+            // 初始加载游戏
+            loadGame();
+            
+            // 5秒后检查是否黑屏
+            setTimeout(checkBlackScreen, 5000);
+            
+            // 重试加载函数
+            window.retryLoading = function() {
+                loadAttempts = 0;
+                gameLoaded = false;
+                loadGame();
+            };
+
+            // 全屏功能
+            fullscreenBtn.addEventListener('click', function() {
+                if (!document.fullscreenElement) {
+                    container.requestFullscreen().catch(err => {
+                        alert('Fullscreen mode failed to launch: ' + err.message);
+                    });
+                } else {
+                    document.exitFullscreen();
+                }
+            });
+
+            // 截图功能
+            screenshotBtn.addEventListener('click', async function() {
+                try {
+                    const canvas = await html2canvas(container);
+                    const link = document.createElement('a');
+                    link.download = 'game-screenshot.png';
+                    link.href = canvas.toDataURL();
+                    link.click();
+                } catch (err) {
+                    alert('Screenshot failed: ' + err.message);
+                }
+            });
+
+            // 监听全屏变化
+            document.addEventListener('fullscreenchange', function() {
+                fullscreenBtn.innerHTML = document.fullscreenElement ?
+                    '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 4a1 1 0 00-1 1v4a1 1 0 01-2 0V5a3 3 0 013-3h4a1 1 0 010 2H5zm10 0a1 1 0 011 1v4a1 1 0 102 0V5a3 3 0 00-3-3h-4a1 1 0 100 2h4zM5 16a1 1 0 001 1h4a1 1 0 100-2H6a1 1 0 01-1-1v-4a1 1 0 10-2 0v4a3 3 0 003 3zm10 0a1 1 0 00-1-1h-4a1 1 0 100 2h4a3 3 0 003-3v-4a1 1 0 10-2 0v4a1 1 0 01-1 1z" clip-rule="evenodd" /></svg>Exit Fullscreen' :
+                    '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm14 0a1 1 0 00-1-1h-4a1 1 0 100 2h1.586l-2.293 2.293a1 1 0 001.414 1.414L15 6.414V8a1 1 0 102 0V4zM3 16a1 1 0 001 1h4a1 1 0 100-2H6.414l2.293-2.293a1 1 0 00-1.414-1.414L5 13.586V12a1 1 0 10-2 0v4zm14 0a1 1 0 01-1 1h-4a1 1 0 110-2h1.586l-2.293-2.293a1 1 0 011.414-1.414L15 13.586V12a1 1 0 112 0v4z" clip-rule="evenodd" /></svg>Fullscreen';
+            });
+        });
+    </script>
+</body>
+</html>
