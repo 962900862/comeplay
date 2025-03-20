@@ -4,9 +4,13 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Block Blast - A vibrant and addictive puzzle game that challenges players to strategically arrange blocks to form solid rows or columns.">
-    <meta name="keywords" content="Block Blast,puzzle game,block arrangement,strategy game,casual game">
+    <meta name="description" content="Block Blast is an addictive puzzle game that challenges you to strategically place blocks on a grid to clear rows and columns. With simple controls and engaging gameplay, it offers a perfect mix of casual fun and brain training.">
+    <meta name="keywords" content="Block Blast,puzzle game,brain training,match 3,strategy">
     <title>Block Blast - Addictive Puzzle Game | Free Experience</title>
+    <meta property="og:title" content="Block Blast - Addictive Puzzle Game">
+    <meta property="og:description" content="Enjoy this addictive block puzzle game that trains your brain while providing hours of entertainment.">
+    <meta property="og:type" content="game">
+    <meta property="og:image" content="https://images.1games.io/cache/game/block-blast/block-blast-m200x130.webp">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -141,6 +145,108 @@
         .dark #game-container {
             background-color: var(--surface-color);
         }
+
+        .game-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .feature-card {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: var(--surface-color);
+            transition: transform 0.2s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .social-share-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: all 0.2s;
+        }
+        
+        .social-share-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 点赞按钮动画样式 */
+        .like-animation-container {
+            overflow: hidden;
+        }
+
+        .like-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .like-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFloat 1s ease-out forwards;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* 点赞按钮点击效果 */
+        .like-btn-active {
+            animation: likeButtonPulse 0.3s ease-out;
+        }
+
+        @keyframes likeButtonPulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* 点赞按钮激活状态 */
+        #like-btn.liked {
+            background: linear-gradient(to right, #ff4b4b, #ff6b6b);
+            border: none;
+            pointer-events: none;
+        }
+
+        #like-btn.liked svg {
+            fill: white;
+            transform: scale(1.1);
+        }
+
+        #like-btn.liked .like-progress-bar {
+            transform: scaleX(1) !important;
+            background: rgba(255, 255, 255, 0.3);
+        }
     </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
@@ -165,11 +271,52 @@
         </div>
     </nav>
 
-    <main class="container mx-auto px-4 py-8 pt-20 max-w-4xl">
-        <header class="mb-8">
-            <h1 class="text-4xl font-bold mb-4 text-center sm:text-left">Block Blast</h1>
-            <p class="text-xl text-gray-600 dark:text-gray-400 text-center sm:text-left">A vibrant puzzle game that challenges your strategic thinking and block arrangement skills</p>
-        </header>
+    <main class="container mx-auto px-4 py-8 pt-20 max-w-6xl">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+            <div>
+                <h1 class="text-4xl font-bold mb-2">Block Blast</h1>
+                <div class="flex flex-wrap items-center gap-4">
+                    <div class="flex items-center">
+                        <div class="bg-gradient-to-r from-[#7D3CFF] to-[#00F3FF] text-white px-4 py-1.5 rounded-full text-sm font-medium flex items-center gap-1.5 shadow-lg shadow-purple-500/20">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            4.9/5
+                        </div>
+                        <span class="text-sm text-gray-500 dark:text-gray-400 ml-2 font-medium">(1,300,000+ votes)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex gap-2 mt-4 md:mt-0">
+                <button class="social-share-btn bg-blue-500 hover:bg-blue-600 text-white relative group">
+                    <div class="share-notification absolute right-full top-1/2 -translate-y-1/2 bg-green-500 text-white px-4 py-2 rounded-lg mr-2 opacity-0 invisible transform scale-95 translate-x-2 transition-all duration-300 whitespace-nowrap">
+                        Copied! Share with your friends and play together!
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                    </svg>
+                </button>
+                <button id="like-btn" class="social-share-btn bg-red-500 hover:bg-red-600 text-white relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-red-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="relative z-10 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform transition-transform duration-300 group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                    </svg>
+                        <span class="like-count">1,245</span>
+                    </div>
+                    <!-- 点赞动画效果 -->
+                    <div class="like-animation-container absolute inset-0 pointer-events-none">
+                        <div class="like-particles"></div>
+                    </div>
+                    <!-- 加载进度条 -->
+                    <div class="absolute bottom-0 left-0 w-full h-1 bg-gray-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="like-progress-bar h-full bg-white transform scale-x-0 transition-transform duration-300"></div>
+                    </div>
+                </button>
+            </div>
+        </div>
 
         <section class="mb-12 relative">
             <div class="mb-4 flex justify-end gap-2">
@@ -178,7 +325,7 @@
                     class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transition-colors duration-200 flex items-center gap-2"
                     title="Fullscreen Mode">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm14 0a1 1 0 00-1-1h-4a1 1 0 100 2h1.586l-2.293 2.293a1 1 0 001.414 1.414L15 6.414V8a1 1 0 102 0V4zM3 16a1 1 0 001 1h4a1 1 0 100-2H6.414l2.293-2.293a1 1 0 00-1.414-1.414L5 13.586V12a1 1 0 10-2 0v4zm14 0a1 1 0 01-1 1h-4a1 1 0 110-2h1.586l-2.293-2.293a1 1 0 011.414-1.414L15 13.586V12a1 1 0 112 0v4z" clip-rule="evenodd" />
+                        <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm14 0a1 1 0 00-1-1h-4a1 1 0 100 2h1.586l-2.293 2.293a1 1 0 001.414 1.414L15 6.414V8a1 1 0 102 0V4zM3 16a1 1 0 001 1h4a1 1 0 100-2H6.414l2.293-2.293a1 1 0 00-1.414-1.414L5 13.586V12a1 1 0 10-2 0v4zm14 0a1 1 0 01-1 1h-4a1 1 0 110-2h1.586l-2.293-2.293a1 1 0 011.414-1.414L15 13.586V12a1 1 0 112 0v4a1 1 0 01-1 1z" clip-rule="evenodd" />
                     </svg>
                     Fullscreen
                 </button>
@@ -188,9 +335,9 @@
                     title="Screenshot">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
-                    </svg>
+        </svg>
                     Screenshot
-                </button>
+    </button>
             </div>
             <div id="game-container" class="aspect-[16/9] w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden relative">
                 <div id="loading-overlay" class="absolute inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
@@ -218,52 +365,284 @@
                     allowFullScreen
                 ></iframe>
             </div>
-        </section>
 
-        <section class="space-y-8">
-            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
-                <h2 class="text-2xl font-semibold mb-4">Game Introduction</h2>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                    Block Blast is a vibrant and addictive puzzle game that challenges players to strategically arrange blocks to form solid rows or columns. The game combines elements of traditional puzzle mechanics with modern gameplay features, offering a blend of strategy, speed, and creativity. Players are given a grid and various block shapes, and the goal is to clear as many blocks as possible by forming complete lines. The game is designed to be both relaxing and mentally stimulating, making it a perfect choice for casual gamers looking to challenge their brains.
+            <!-- Game Introduction -->
+            <div class="mt-6 bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                <div class="flex items-start gap-6">
+                    <!-- Game Icon -->
+                    <div class="hidden sm:block flex-shrink-0">
+                        <div class="w-24 h-24 rounded-2xl overflow-hidden shadow-lg">
+                            <img 
+                                 src="https://images.1games.io/cache/game/block-blast/block-blast-m200x130.webp"
+                                alt="Bleach vs Naruto 3.3 Icon" 
+                                class="w-full h-full object-cover"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Game Description -->
+                    <div class="flex-grow">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Game Introduction</h3>
+                            <div class="flex items-center gap-2 mt-2 sm:mt-0">
+                                <span class="px-3 py-1 bg-gradient-to-r from-[#7D3CFF] to-[#00F3FF] text-white text-sm rounded-full font-medium">
+                                    Free to Play
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="prose dark:prose-invert max-w-none">
+                            <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+                                Block Blast is an addictive puzzle game that challenges players to strategically place blocks of different shapes onto a grid board. The goal is to clear rows and columns by filling them completely, which rewards you with points and keeps the board open for more moves.
+                            </p>
+                            <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                With its simple yet engaging gameplay, Block Blast offers both a Classic mode for endless high-score chasing and an Adventure mode with levels to conquer. This brain-training puzzle game can be played offline without WiFi, making it the perfect entertainment for players of all ages looking to test their strategic thinking.
                 </p>
-            </div>
+                </div>
 
-            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
-                <h2 class="text-2xl font-semibold mb-4">Game Guide</h2>
-                <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
-                    <li><span class="font-semibold">Basic Gameplay:</span> Drag and drop various-shaped blocks onto the grid. Aim to complete rows or columns to clear them and earn points.</li>
-                    <li><span class="font-semibold">Strategies:</span> Focus on filling entire rows or columns to maximize your score. Plan ahead to avoid getting stuck with blocks that don't fit.</li>
-                    <li><span class="font-semibold">Modes:</span> Explore different game modes like Endless and Connect Animal for varied challenges and gameplay experiences.</li>
-                </ul>
-            </div>
-
-            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
-                <h2 class="text-2xl font-semibold mb-4">In-Game Items</h2>
-                <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
-                    <li><span class="font-semibold">Blocks:</span> Various shapes and sizes that players must arrange on the grid.</li>
-                    <li><span class="font-semibold">Power-Ups:</span> Items that can help clear multiple rows or columns at once, often available in special modes.</li>
-                </ul>
-            </div>
-
-            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
-                <h2 class="text-2xl font-semibold mb-4">Game Controls</h2>
-                <div class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                    <p class="mb-4">Use the mouse to drag and drop blocks onto the grid.</p>
+                        <!-- Quick Information Bar -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
+                            <div class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#7D3CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Release: 2022</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#7D3CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                                </svg>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Browser Based</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#7D3CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Single Player</span>
+                        </div>
+                            <div class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#7D3CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">Puzzle Game</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
+
+        <section class="grid md:grid-cols-2 gap-8 mb-12">
+            <div class="space-y-6">
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Game Features</h2>
+                    <ul class="space-y-3 text-gray-600 dark:text-gray-300">
+                        <li class="flex items-start gap-2">
+                            <svg class="h-6 w-6 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span>Two game modes: Classic Mode for endless play and Adventure Mode with levels</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <svg class="h-6 w-6 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span>Challenging puzzle gameplay that enhances logical thinking and strategy</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <svg class="h-6 w-6 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span>Playable offline without WiFi connection for entertainment anywhere</span>
+                        </li>
+                </ul>
+            </div>
 
             <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
-                <h2 class="text-2xl font-semibold mb-4">Game Tags</h2>
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 rounded-full">Puzzle</span>
-                    <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-100 rounded-full">2D</span>
-                    <span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-100 rounded-full">Vibrant</span>
-                    <span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-100 rounded-full">Strategy</span>
-                    <span class="px-3 py-1 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-100 rounded-full">Block Arrangement</span>
+                    <h2 class="text-2xl font-bold mb-4">How to Play</h2>
+                    <ol class="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-300">
+                        <li>Drag and drop colored blocks onto the 8x8 grid board</li>
+                        <li>Clear rows or columns by filling them completely</li>
+                        <li>Plan your moves carefully to maximize space usage</li>
+                        <li>Create combo chains to earn bonus points and higher scores</li>
+                    </ol>
+                </div>
+                </div>
+
+            <div class="space-y-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Game Controls</h2>
+                    <div class="space-y-3 text-gray-600 dark:text-gray-300">
+                        <div class="flex items-center gap-2">
+                            <kbd class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded">Mouse</kbd>
+                            <span>Click and drag blocks to place them on the grid</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <kbd class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded">Touch</kbd>
+                            <span>Tap and drag blocks (on touchscreen devices)</span>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                    <h2 class="text-2xl font-bold mb-4">Game Tags</h2>
+                    <div class="flex flex-wrap gap-2">
+                        <!-- Puzzle Game tag -->
+                        <span class="px-3 py-1.5 bg-gradient-to-br from-[#7D3CFF] to-[#00F3FF] text-white rounded-full text-sm font-medium shadow-lg shadow-purple-500/20 flex items-center gap-1 hover:scale-105 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path d="M20.2 20.2c2.04-2.03.02-7.22-4.53-11.77-4.55-4.55-9.74-6.57-11.77-4.53-2.03 2.04-.02 7.22 4.53 11.77 4.55 4.55 9.74 6.57 11.77 4.53z" />
+                            </svg>
+                            Puzzle Game
+                        </span>
+                        
+                        <!-- Brain Training tag -->
+                        <span class="px-3 py-1.5 bg-gradient-to-br from-pink-500 to-rose-500 text-white rounded-full text-sm font-medium shadow-lg shadow-pink-500/20 flex items-center gap-1 hover:scale-105 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9.5 21h5"></path>
+                                <path d="M5 8.2c0-1.68 0-2.52.327-3.162a3 3 0 0 1 1.311-1.311C7.48 3.4 8.32 3.4 10 3.4h4c1.68 0 2.52 0 3.162.327a3 3 0 0 1 1.311 1.311C19 5.68 19 6.52 19 8.2v7.6c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C16.52 20.6 15.68 20.6 14 20.6h-4c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C5 18.32 5 17.48 5 15.8V8.2Z"></path>
+                            </svg>
+                            Brain Training
+                        </span>
+
+                        <!-- Strategy tag -->
+                        <span class="px-3 py-1.5 bg-gradient-to-br from-amber-500 to-orange-500 text-white rounded-full text-sm font-medium shadow-lg shadow-amber-500/20 flex items-center gap-1 hover:scale-105 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 8h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2v4l-4-4H9a1.994 1.994 0 0 1-1.414-.586m0 0L11 14h4a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2v4l.586-.586z"></path>
+                            </svg>
+                            Strategy
+                        </span>
+
+                        <!-- Match 3 tag -->
+                        <span class="px-3 py-1.5 bg-gradient-to-br from-green-400 to-emerald-500 text-white rounded-full text-sm font-medium shadow-lg shadow-green-500/20 flex items-center gap-1 hover:scale-105 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18.5 19.5h-13"></path>
+                                <path d="M5 15.5v4"></path>
+                                <path d="M19 15.5v4"></path>
+                                <path d="M3 7l4.5-2.5 4.5 2.5 4.5-2.5L21 7"></path>
+                                <path d="M3 10l4.5-2.5 4.5 2.5 4.5-2.5L21 10"></path>
+                                <path d="M3 13l4.5-2.5 4.5 2.5 4.5-2.5L21 13"></path>
+                            </svg>
+                            Match 3
+                        </span>
+
+                        <!-- Casual tag -->
+                        <span class="px-3 py-1.5 bg-gradient-to-br from-blue-500 to-cyan-500 text-white rounded-full text-sm font-medium shadow-lg shadow-blue-500/20 flex items-center gap-1 hover:scale-105 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 12c-1.657 0-3-1.567-3-3.5S10.343 5 12 5s3 1.567 3 3.5-1.343 3.5-3 3.5z"></path>
+                                <path d="M3 18v-2c0-1.387.782-2.5 2.5-3.5m13 3.5v-2c0-1.387-.782-2.5-2.5-3.5"></path>
+                                <path d="M5.5 15.5C3.125 16.25 2 17.5 2 20v1h20v-1c0-2.5-1.125-3.75-3.5-4.5"></path>
+                            </svg>
+                            Casual
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game Resources and Guides -->
+        <section class="mb-12">
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                <button id="resources-toggle" class="flex justify-between items-center w-full text-left">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Game Resources & Guides</h2>
+                    <svg id="resources-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                
+                <div id="resources-content" class="mt-4">
+                    <div class="space-y-6">
+                        <!-- Official Guide -->
+                        <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-[#7D3CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                Official Guide: How to Play Block Blast
+                            </h3>
+                            <div class="ml-7 space-y-2">
+                                <a href="https://www.mumuplayer.com/blog/block-blast-guide-how-to-get-high-scores.html" target="_blank" rel="noopener noreferrer" class="flex items-center text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                    </svg>
+                                    <span>Block Blast Guide: How to Get High Scores</span>
+                                </a>
+                                <div class="text-gray-600 dark:text-gray-300 text-sm mt-2">
+                                    <h4 class="font-semibold mb-2">Getting Started with Block Blast</h4>
+                                    <p class="mb-3">Welcome to Block Blast, an addictive puzzle game that challenges your strategic thinking! Follow these simple steps to begin your block-clearing journey:</p>
+                                    
+                                    <ol class="list-decimal list-inside space-y-2 pl-1">
+                                        <li><span class="font-medium">Game Modes:</span> Block Blast offers two distinct modes - Classic Mode for endless play and Adventure Mode with progressive levels</li>
+                                        <li><span class="font-medium">Basic Mechanics:</span> Drag and drop colored blocks onto the 8x8 board, aiming to clear rows and columns by filling them completely</li>
+                                        <li><span class="font-medium">Scoring Strategy:</span> Plan your moves carefully to maximize space usage and create opportunities for multiple line clears</li>
+                                        <li><span class="font-medium">Combo Techniques:</span> Try to clear multiple rows or columns in a single move to earn bonus points and achieve higher scores</li>
+                                    </ol>
+                                    
+                                    <h4 class="font-semibold mt-4 mb-2">Advanced Tips</h4>
+                                    <ul class="list-disc list-inside space-y-1 pl-1">
+                                        <li>Make plans in advance by looking at the upcoming blocks</li>
+                                        <li>Keep the center of the grid open for more flexibility</li>
+                                        <li>Use corners effectively for oddly-shaped blocks</li>
+                                        <li>Save special blocks for difficult situations when available</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Video Tutorials -->
+                        <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-[#7D3CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                                Latest Tutorials & Community Resources
+                            </h3>
+                            <div class="ml-7 space-y-2">
+                                <a href="https://www.youtube.com/watch?v=0KV9Njd1TTk" target="_blank" rel="noopener noreferrer" class="flex items-center text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                    </svg>
+                                    <span>How To Get High Score in Block Blast (2025)</span>
+                                </a>
+                                <a href="https://www.youtube.com/watch?v=tMKwQNjERUQ" target="_blank" rel="noopener noreferrer" class="flex items-center text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                    </svg>
+                                    <span>Block Blast Tips And Tricks (2025)</span>
+                                </a>
+                                <div class="mt-4 mb-2 text-gray-700 dark:text-gray-300 font-medium">Official Social Media:</div>
+                                <div class="text-gray-600 dark:text-gray-300 text-sm">
+                                    <ul class="list-disc list-inside space-y-1">
+                                        <li>TikTok: <a href="https://www.tiktok.com/@blockblastofficial" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline">@blockblastofficial</a></li>
+                                        <li>YouTube: <a href="https://www.youtube.com/@BlockBlastOfficial" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline">@BlockBlastOfficial</a></li>
+                                        <li>Discord: <a href="https://discord.gg/DxqHRKAKpu" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline">Block Blast Community</a></li>
+                                        <li>Instagram: <a href="https://www.instagram.com/blockblastglobal/" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline">@blockblastglobal</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-sm text-gray-600 dark:text-gray-400 mt-4 italic">
+                            <p>Block Blast is a free puzzle game developed by Hungry Studio, offering addictive block-placing gameplay for players of all ages. The game features an 8x8 grid where players strategically place blocks to clear rows and columns. With over 100 million downloads worldwide and a rating of 4.9/5 from over 1.3 million reviews, it has become one of the most popular puzzle games. All links are verified as of 2025. GameVerse is not affiliated with the game development team.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
+
+    <footer class="mt-12 py-4 border-t border-gray-200 dark:border-gray-800">
+        <div class="container mx-auto px-4 max-w-6xl text-center text-xs text-gray-500 dark:text-gray-400">
+            <div class="flex justify-center items-center space-x-4">
+                <a href="../#/privacy-policy" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Privacy Policy</a>
+                <span>•</span>
+                <a href="../terms-of-service.html#/terms-of-service" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Terms of Service</a>
+                <span>•</span>
+                <span>© 2024 GameVerse. All rights reserved.</span>
+            </div>
+        </div>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -275,11 +654,69 @@
             const errorOverlay = document.getElementById('error-overlay');
             const themeToggleBtn = document.getElementById('theme-toggle');
             
+            // 添加资源下拉框切换功能
+            const resourcesToggle = document.getElementById('resources-toggle');
+            const resourcesContent = document.getElementById('resources-content');
+            const resourcesIcon = document.getElementById('resources-icon');
+            
+            // 设置默认状态为展开(旋转箭头)
+            resourcesIcon.classList.add('rotate-180');
+            
+            resourcesToggle.addEventListener('click', function() {
+                resourcesContent.classList.toggle('hidden');
+                resourcesIcon.classList.toggle('rotate-180');
+            });
+            
+            // 初始化游戏卡片链接
+            initGameCardLinks();
+            
             // Theme toggle functionality
             themeToggleBtn.addEventListener('click', function() {
                 const isDark = document.documentElement.classList.contains('dark');
                 applyTheme(!isDark);
             });
+            
+            // 根据游戏标题构建文件路径并设置链接
+            function initGameCardLinks() {
+                const gameCards = document.querySelectorAll('#games-scroll a');
+                
+                gameCards.forEach(card => {
+                    const titleElement = card.querySelector('h3');
+                    if (titleElement) {
+                        const gameTitle = titleElement.textContent.trim();
+                        // 构建游戏文件路径 - 根据已有游戏文件的命名规则处理
+                        let fileName;
+                        
+                        // 特殊游戏文件名映射表
+                        const specialGames = {
+                            'Block Blast': 'Block Blast.html',
+                            'Wave Dash': 'wave-dash.html',
+                            'Slither.io': 'slither.io.html',
+                            'Fireboy and Watergirl': 'Fireboy and Watergirl 5 Elements.html',
+                            'Bleach vs Naruto': 'Bleach vs Naruto 3.3.html',
+                            'Coup Ahoo': 'Coup Ahoo.html',
+                            'Sprunki': 'Sprunki.html'
+                        };
+                        
+                        if (specialGames[gameTitle]) {
+                            // 如果是已知的特殊游戏名称，直接使用映射的文件名
+                            fileName = specialGames[gameTitle];
+                        } else if (gameTitle.includes('.io')) {
+                            // 处理 .io 游戏
+                            fileName = gameTitle.toLowerCase() + '.html';
+                        } else {
+                            // 默认情况：转换为小写并用连字符替换空格
+                            fileName = gameTitle.toLowerCase().replace(/\s+/g, '-') + '.html';
+                        }
+                        
+                        // 设置完整链接路径
+                        card.href = '/comeplay/games/' + fileName;
+                        
+                        // 调试信息
+                        console.log(`游戏"${gameTitle}"的链接设置为: ${card.href}`);
+                    }
+                });
+            }
             
             let loadAttempts = 0;
             const maxLoadAttempts = 3;
@@ -377,7 +814,7 @@
                 try {
                     const canvas = await html2canvas(container);
                     const link = document.createElement('a');
-                    link.download = 'block-blast-screenshot.png';
+                    link.download = 'blockblast-screenshot.png';
                     link.href = canvas.toDataURL();
                     link.click();
                 } catch (err) {
@@ -389,7 +826,164 @@
             document.addEventListener('fullscreenchange', function() {
                 fullscreenBtn.innerHTML = document.fullscreenElement ?
                     '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 4a1 1 0 00-1 1v4a1 1 0 01-2 0V5a3 3 0 013-3h4a1 1 0 010 2H5zm10 0a1 1 0 011 1v4a1 1 0 102 0V5a3 3 0 00-3-3h-4a1 1 0 100 2h4zM5 16a1 1 0 001 1h4a1 1 0 100-2H6a1 1 0 01-1-1v-4a1 1 0 10-2 0v4a3 3 0 003 3zm10 0a1 1 0 00-1-1h-4a1 1 0 100 2h4a3 3 0 003-3v-4a1 1 0 10-2 0v4a1 1 0 01-1 1z" clip-rule="evenodd" /></svg>Exit Fullscreen' :
-                    '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm14 0a1 1 0 00-1-1h-4a1 1 0 100 2h1.586l-2.293 2.293a1 1 0 001.414 1.414L15 6.414V8a1 1 0 102 0V4zM3 16a1 1 0 001 1h4a1 1 0 100-2H6.414l2.293-2.293a1 1 0 00-1.414-1.414L5 13.586V12a1 1 0 10-2 0v4zm14 0a1 1 0 01-1 1h-4a1 1 0 110-2h1.586l-2.293-2.293a1 1 0 011.414-1.414L15 13.586V12a1 1 0 112 0v4z" clip-rule="evenodd" /></svg>Fullscreen';
+                    '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm14 0a1 1 0 00-1-1h-4a1 1 0 100 2h1.586l-2.293 2.293a1 1 0 001.414 1.414L15 6.414V8a1 1 0 102 0V4zM3 16a1 1 0 001 1h4a1 1 0 100-2H6.414l2.293-2.293a1 1 0 00-1.414-1.414L5 13.586V12a1 1 0 10-2 0v4zm14 0a1 1 0 01-1 1h-4a1 1 0 110-2h1.586l-2.293-2.293a1 1 0 011.414-1.414L15 13.586V12a1 1 0 112 0v4a1 1 0 01-1 1z" clip-rule="evenodd" /></svg>Fullscreen';
+            });
+
+            const scrollContainer = document.getElementById('games-scroll');
+            const scrollLeftBtn = document.getElementById('scroll-left');
+            const scrollRightBtn = document.getElementById('scroll-right');
+            const cardWidth = 316; // 300px card width + 16px gap
+
+            // 滚动按钮点击事件
+            scrollLeftBtn.addEventListener('click', () => {
+                scrollContainer.scrollBy({
+                    left: -cardWidth * 2,
+                    behavior: 'smooth'
+                });
+            });
+
+            scrollRightBtn.addEventListener('click', () => {
+                scrollContainer.scrollBy({
+                    left: cardWidth * 2,
+                    behavior: 'smooth'
+                });
+            });
+
+            // 添加鼠标滚轮横向滚动
+            scrollContainer.addEventListener('wheel', (e) => {
+                if (e.deltaY !== 0) {
+                    e.preventDefault();
+                    scrollContainer.scrollBy({
+                        left: e.deltaY,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+
+            // 更新按钮状态
+            function updateScrollButtons() {
+                scrollLeftBtn.style.opacity = scrollContainer.scrollLeft <= 0 ? '0.5' : '1';
+                scrollRightBtn.style.opacity = 
+                    scrollContainer.scrollLeft >= scrollContainer.scrollWidth - scrollContainer.clientWidth 
+                    ? '0.5' 
+                    : '1';
+            }
+
+            scrollContainer.addEventListener('scroll', updateScrollButtons);
+            updateScrollButtons(); // 初始状态
+
+            // 点赞按钮动画效果
+            const likeBtn = document.getElementById('like-btn');
+            const likeCount = likeBtn.querySelector('.like-count');
+            const progressBar = likeBtn.querySelector('.like-progress-bar');
+            const particlesContainer = likeBtn.querySelector('.like-particles');
+            
+            // 从 localStorage 获取点赞状态和数量
+            let isLiked = localStorage.getItem('blockblast_liked') === 'true';
+            let storedLikeCount = parseInt(localStorage.getItem('blockblast_like_count')) || 1245;
+            
+            // 初始化点赞状态
+            function initLikeState() {
+                likeCount.textContent = storedLikeCount.toLocaleString();
+                if (isLiked) {
+                    likeBtn.classList.add('liked');
+                    progressBar.style.transform = 'scaleX(1)';
+                }
+            }
+            
+            // 初始化点赞状态
+            initLikeState();
+
+            likeBtn.addEventListener('click', function() {
+                if (!isLiked) {
+                    // 添加点击动画
+                    this.classList.add('like-btn-active');
+                    setTimeout(() => this.classList.remove('like-btn-active'), 300);
+
+                    // 更新点赞数
+                    storedLikeCount++;
+                    likeCount.textContent = storedLikeCount.toLocaleString();
+                    
+                    // 保存到 localStorage
+                    localStorage.setItem('blockblast_liked', 'true');
+                    localStorage.setItem('blockblast_like_count', storedLikeCount.toString());
+
+                    // 创建粒子效果
+                    createParticles();
+
+                    // 更新进度条
+                    progressBar.style.transform = 'scaleX(1)';
+                    this.classList.add('liked');
+
+                    isLiked = true;
+                }
+            });
+
+            function createParticles() {
+                const particleCount = 8;
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'like-particle';
+                    
+                    // 随机位置和方向
+                    const angle = (i / particleCount) * Math.PI * 2;
+                    const distance = 50;
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance;
+                    
+                    particle.style.setProperty('--tx', `${tx}px`);
+                    particle.style.setProperty('--ty', `${ty}px`);
+                    particle.style.left = '50%';
+                    particle.style.top = '50%';
+                    
+                    particlesContainer.appendChild(particle);
+                    
+                    // 动画结束后移除粒子
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 1000);
+                }
+            }
+
+            // 鼠标悬停时显示进度条
+            likeBtn.addEventListener('mouseenter', function() {
+                if (!isLiked) {
+                    progressBar.style.transform = 'scaleX(1)';
+                }
+            });
+
+            likeBtn.addEventListener('mouseleave', function() {
+                if (!isLiked) {
+                    progressBar.style.transform = 'scaleX(0)';
+                }
+            });
+
+            // Share button functionality
+            const shareBtn = document.querySelector('.social-share-btn');
+            const shareNotification = shareBtn.querySelector('.share-notification');
+
+            shareBtn.addEventListener('click', async function() {
+                try {
+                    // Get the current URL
+                    const url = window.location.href;
+                    
+                    // Copy to clipboard
+                    await navigator.clipboard.writeText(url);
+                    
+                    // Show notification
+                    shareNotification.style.opacity = '1';
+                    shareNotification.style.visibility = 'visible';
+                    shareNotification.style.transform = 'translate(0, -50%) scale(1)';
+                    
+                    // Hide notification after 2 seconds
+                    setTimeout(() => {
+                        shareNotification.style.opacity = '0';
+                        shareNotification.style.visibility = 'hidden';
+                        shareNotification.style.transform = 'translate(8px, -50%) scale(0.95)';
+                    }, 2000);
+                } catch (err) {
+                    console.error('Failed to copy URL:', err);
+                }
             });
         });
     </script>
